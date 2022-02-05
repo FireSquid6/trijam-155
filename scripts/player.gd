@@ -20,8 +20,8 @@ onready var dash_time = 1
 
 onready var can_jump = false
 onready var jumping = false
-onready var jump_time = 1.5
-onready var jump_spd = 40
+onready var jump_time = 0.3
+onready var jump_spd = 140
 
 
 func _physics_process(delta):
@@ -62,8 +62,9 @@ func _physics_process(delta):
 		on_jump()
 	# if already jumping
 	elif jumping:
-		if !Input.is_action_just_pressed("plr_jump"):
-			$Timers/JumpTime.time_left = 0
+		if !Input.is_action_pressed("plr_jump"):
+			#$Timers/JumpTime.wait_time = 0.00001
+			jumping = false
 	# if not on the floor, just fall
 	elif !on_floor:
 		velocity.y += Global.GRAVITY
@@ -88,10 +89,12 @@ func on_dash():
 
 # called whenever the player jumps
 func on_jump():
+	velocity.y -= jump_spd
+	
 	jumping = true
 	can_jump = false
 	
-	$Timers/JumpTime.time_left = jump_time
+	$Timers/JumpTime.wait_time = jump_time
 	$Timers/JumpTime.start()
 
 
