@@ -70,8 +70,11 @@ func _physics_process(delta):
 		velocity.y += Global.GRAVITY
 	
 	# move and get new velocity
-	velocity = move_and_slide(velocity)
-
+	velocity = move_and_slide(velocity, Vector2.RIGHT)
+	
+	if is_on_floor():
+		var normal: Vector2 = get_floor_normal()
+		rotation = normal.angle()
 
 # sets can dash to be true
 func _on_DashTimer_timeout():
