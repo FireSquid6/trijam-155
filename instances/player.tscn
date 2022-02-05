@@ -7,6 +7,7 @@
 extents = Vector2( 4.5, 8 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+collision_mask = 6
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_horizontal_guides_": [ -30.0 ]
@@ -23,8 +24,10 @@ texture = ExtResource( 1 )
 current = true
 zoom = Vector2( 0.25, 0.25 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
+[node name="FloorDetector" type="RayCast2D" parent="."]
+enabled = true
 cast_to = Vector2( 0, 16 )
+collision_mask = 4
 
 [node name="Timers" type="Node" parent="."]
 
@@ -33,4 +36,8 @@ wait_time = 2.0
 
 [node name="DashTime" type="Timer" parent="Timers"]
 
+[node name="JumpTime" type="Timer" parent="Timers"]
+wait_time = 1.5
+
 [connection signal="timeout" from="Timers/DashCooldown" to="." method="_on_DashTimer_timeout"]
+[connection signal="timeout" from="Timers/JumpTime" to="." method="_on_JumpTime_timeout"]

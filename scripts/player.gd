@@ -18,6 +18,11 @@ onready var can_dash = true
 onready var dash_cooldown = 3
 onready var dash_time = 1
 
+onready var can_jump = false
+onready var jumping = false
+onready var jump_time = 1.5
+onready var jump_spd = 40
+
 
 func _physics_process(delta):
 	# HORIZONTAL MOVEMENT
@@ -46,10 +51,25 @@ func _physics_process(delta):
 		else:
 			velocity.x -= deaccspd * sign(velocity.x)
 	
-	# move
-	velocity = move_and_slide(velocity)
 	
 	# VERTICAL MOVEMENT
+	# check if on floor
+	var on_floor = $FloorDetector.is_colliding()
+	
+	
+	# start jump if on floor and pressed
+	if on_floor and Input.is_action_just_pressed("plr_jump"):
+		on_jump()
+	# if already jumping
+	elif jumping:
+		if !Input.is_action_just_pressed("plr_jump"):
+			$Timers/JumpTime.time_left = 0
+	# if not on the floor, just fall
+	elif !on_floor:
+		velocity.y += Global.GRAVITY
+	
+	# move and get new velocity
+	velocity = move_and_slide(velocity)
 
 
 # sets can dash to be true
@@ -64,3 +84,16 @@ func on_dash():
 	$Timers/DashTime.wait_time = dash_time
 	$Timers/DashTime.start()
 	can_dash = false
+
+
+# called whenever the player jumps
+func on_jump():
+	jumping = true
+	can_jump = false
+	
+	$Timers/JumpTime.time_left = jump_time
+	$Timers/JumpTime.start()
+
+
+func _on_JumpTime_timeout():
+	jumping = false
