@@ -1,11 +1,16 @@
 extends RigidBody2D
+class_name Player
 
-const ACCELERATION = 400
+const ACCELERATION = 200
 const DECELERATION = 800
 const MAX_FORCE = 1500
 const FORCE_OFFSET_LENGTH = 5
 
 onready var lastmouse = Vector2.ZERO
+
+func _ready():
+	name = "Player"
+
 
 func _process(_delta):
 	Global.player_ref = self

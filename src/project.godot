@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RigidBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://instances/enemies/enemy.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://instances/player/player.gd"
+} ]
+_global_script_class_icons={
+"Enemy": "",
+"Player": ""
+}
+
 [application]
 
 config/name="Square Bash"

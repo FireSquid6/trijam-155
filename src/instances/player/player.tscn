@@ -3,7 +3,7 @@
 [ext_resource path="res://instances/player/player.gd" type="Script" id=1]
 
 [sub_resource type="PhysicsMaterial" id=2]
-friction = 0.0
+friction = 0.3
 bounce = 0.25
 
 [sub_resource type="RectangleShape2D" id=1]
